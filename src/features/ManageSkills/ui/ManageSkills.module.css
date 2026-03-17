@@ -1,0 +1,73 @@
+.container {
+  padding: 0;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--mantine-color-black-9);
+}
+
+.form {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+  width: 100%;
+}
+
+.input {
+  flex: 1;
+}
+
+.input input {
+  border-radius: 8px;
+  font-size: 12px;
+  border: 1px solid var(--mantine-color-preLight-9);
+  min-height: 30px;
+  height: 30px;
+}
+
+.input input:hover:not(:focus) {
+  background-color: var(--mantine-color-ultraLight-2);
+}
+
+.input input:focus {
+  border-color: var(--mantine-color-primary-4);
+}
+
+.button {
+  opacity: 0.5;
+  width: 34px;
+  height: 30px;
+  border-radius: 8px;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.pills > div {
+  column-gap: 4px;
+  row-gap: 6px;
+}
+
+.pill {
+  padding: 0 9px 0 12px;
+  background-color: var(--mantine-color-background-0);
+  font-size: 12px;
+  border-radius: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.pill path {
+  fill: var(--mantine-color-lightGray-9);
+}
+
+.pill:hover {
+  background-color: var(--mantine-color-background-1);
+}

@@ -1,0 +1,11 @@
+.select {
+  width: 100%;
+}
+
+.select input:hover:not(:focus) {
+  background-color: var(--mantine-color-ultraLight-2);
+}
+
+.select input:focus {
+  border-color: var(--mantine-color-primary-4);
+}

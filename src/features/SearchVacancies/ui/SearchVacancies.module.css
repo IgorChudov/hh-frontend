@@ -1,0 +1,34 @@
+.container {
+  height: 100%;
+  gap: 0;
+  flex-wrap: nowrap;
+}
+
+.input {
+  min-width: 403px;
+  margin-right: 12px;
+}
+
+.input input {
+  font-size: 16px;
+  height: 42px;
+  border-radius: 8px;
+  color: var(--mantine-color-lightGray-9);
+  background-color: var(--mantine-color-background-0);
+}
+
+.input input:hover:not(:focus) {
+  background-color: var(--mantine-color-ultraLight-2);
+}
+
+.input input:focus {
+  border-color: var(--mantine-color-primary-4);
+}
+
+.button {
+  padding-left: 22px;
+  padding-right: 22px;
+  font-weight: 400;
+  font-size: 16px;
+  height: 42px;
+}
