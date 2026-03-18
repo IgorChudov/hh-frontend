@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Title, Loader, Group } from "@mantine/core";
+import { Title, Loader, Group, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { useAppDispatch, useAppSelector } from "../../shared/hooks";
 import { loadVacancies, setPage } from "../../entities/vacancies/model/vacanciesSlice";
@@ -11,13 +11,13 @@ import classes from "./MainPage.module.css";
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
-  const { items, loading, page, totalPages } = useAppSelector(
+  const { items, loading, page, totalPages, skills, search, city } = useAppSelector(
     (state) => state.vacancies
   );
 
   useEffect(() => {
     dispatch(loadVacancies());
-  }, [page, dispatch]);
+  }, [page, skills, search, city, dispatch]);
 
   return (
     <div className={classes.container}>
@@ -37,16 +37,20 @@ export const MainPage = () => {
         <main className={classes.vacancies}>
           {loading ? (
             <Loader className={classes.load}/>
+          ) : items.length === 0 ? (
+            <Text className={classes.empty}>Вакансии не найдены</Text>
           ) : (
             <>
               {items.map((vacancy) => (
                 <VacancyCard key={vacancy.id} vacancy={vacancy} />
               ))}
-              <PaginationBar
-                page={page}
-                total={totalPages}
-                onChange={(p) => dispatch(setPage(p))}
-              />
+              {totalPages > 1 && (
+                <PaginationBar
+                  page={page}
+                  total={totalPages}
+                  onChange={(p) => dispatch(setPage(p))}
+                />
+              )}
             </>
           )}
         </main>

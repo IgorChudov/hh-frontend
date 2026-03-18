@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Group, Pill, PillGroup, TextInput, ActionIcon } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { setSkills, loadVacancies, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
+import { setSkills, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
 import classes from "./ManageSkills.module.css";
 
 export const ManageSkills = () => {
@@ -16,7 +16,6 @@ export const ManageSkills = () => {
       const updated = [...skills, trimmed];
       dispatch(setSkills(updated));
       dispatch(setPage(1));
-      dispatch(loadVacancies());
     }
     setInput("");
   };
@@ -25,7 +24,6 @@ export const ManageSkills = () => {
     const updated = skills.filter((s) => s !== skill);
     dispatch(setSkills(updated));
     dispatch(setPage(1));
-    dispatch(loadVacancies());
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

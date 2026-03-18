@@ -19,7 +19,7 @@ const initialState: VacanciesState = {
   error: null,
   page: 1,
   totalPages: 1,
-  skills: ["JavaScript", "React", "Redux", "ReduxToolkit", "Nextjs"],
+  skills: ["TypeScript", "React", "Redux"],
   search: "",
   city: "",
 };
