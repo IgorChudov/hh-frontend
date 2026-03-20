@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Group, Pill, PillGroup, TextInput, ActionIcon } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { setSkills, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
+import { setSkills } from "../../../entities/vacancies/model/vacanciesSlice";
 import classes from "./ManageSkills.module.css";
 
 export const ManageSkills = () => {
