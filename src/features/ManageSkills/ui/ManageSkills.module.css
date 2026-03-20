@@ -13,7 +13,6 @@
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  margin-bottom: 12px;
   gap: 8px;
   width: 100%;
 }
