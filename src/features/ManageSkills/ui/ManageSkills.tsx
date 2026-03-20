@@ -15,7 +15,6 @@ export const ManageSkills = () => {
     if (trimmed && !skills.includes(trimmed)) {
       const updated = [...skills, trimmed];
       dispatch(setSkills(updated));
-      dispatch(setPage(1));
     }
     setInput("");
   };
@@ -23,7 +22,6 @@ export const ManageSkills = () => {
   const removeSkill = (skill: string) => {
     const updated = skills.filter((s) => s !== skill);
     dispatch(setSkills(updated));
-    dispatch(setPage(1));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
