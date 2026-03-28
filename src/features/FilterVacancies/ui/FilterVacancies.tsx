@@ -24,6 +24,6 @@ export const FilterVacancies = () => {
       comboboxProps={{ shadow: "md" }}
       />
     </Card>
-    
+
   );
 };
