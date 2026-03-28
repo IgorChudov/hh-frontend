@@ -44,7 +44,7 @@ export const MainPage = () => {
           ) : (
             <>
               {items.map((vacancy) => (
-                <VacancyCard key={vacancy.id} vacancy={vacancy} onClick={() => navigate(`/vacancy/${vacancy.id}`, {state: { vacancy }})} />
+                <VacancyCard key={vacancy.id} vacancy={vacancy} onClick={() => navigate(`/vacancies/${vacancy.id}`, {state: { vacancy }})} />
               ))}
               {totalPages > 1 && (
                 <PaginationBar
