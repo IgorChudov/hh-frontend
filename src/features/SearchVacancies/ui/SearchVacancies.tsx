@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Group, TextInput, Button } from "@mantine/core";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { setSearch, loadVacancies, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
@@ -9,6 +9,12 @@ export const SearchVacancies = () => {
   const dispatch = useAppDispatch();
   const search = useAppSelector((state) => state.vacancies.search);
   const [localSearch, setLocalSearch] = useState(search);
+
+  useEffect(() => {
+    if (localSearch !== search) {
+      setLocalSearch(search);
+    }
+  }, [search]);
 
   const handleSearch = () => {
     dispatch(setSearch(localSearch));

@@ -1,11 +1,12 @@
 import { Select, Card } from "@mantine/core";
-import { useAppDispatch } from "../../../shared/hooks";
+import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
 import { setCity, loadVacancies, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
 import LocationIcon from "../../../shared/assets/location-icon.svg?react";
 import classes from "./FilterVacancies.module.css";
 
 export const FilterVacancies = () => {
   const dispatch = useAppDispatch();
+  const city = useAppSelector((state) => state.vacancies.city);
 
   const handleCityChange = (value: string | null) => {
     dispatch(setCity(value || ""));
@@ -18,6 +19,7 @@ export const FilterVacancies = () => {
       <Select
       placeholder="Все города"
       data={["Все города", "Москва", "Санкт-Петербург"]}
+      value={city || "Все города"}
       onChange={handleCityChange}
       className={classes.select}
       leftSection={<LocationIcon />}
