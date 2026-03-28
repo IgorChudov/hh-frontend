@@ -3,9 +3,9 @@ import type { Vacancy } from "../../entities/vacancies/model/types";
 import classes from "./VacancyCard.module.css";
 import clsx from "clsx";
 
-type Props = { vacancy: Vacancy };
+type Props = { vacancy: Vacancy; onClick?: () => void; variant?: 'list' | 'detail'; };
 
-export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
+export const VacancyCard: React.FC<Props> = ({ vacancy, onClick, variant = 'list' }) => {
   const formatNumber = (num?: number) => {
     if (!num) return "";
     return new Intl.NumberFormat("ru-RU").format(num);
@@ -85,7 +85,7 @@ export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
       };
 
   return (
-    <div className={classes.card}>
+    <div className={classes.card} onClick={onClick}>
       <Text className={classes.title}>{vacancy.name}</Text>
       <Group className={classes.wrapper}>
         <Text className={classes.salary}>{salary}</Text>
@@ -104,22 +104,40 @@ export const VacancyCard: React.FC<Props> = ({ vacancy }) => {
       <Text className={classes.area}>{vacancy.area.name}</Text>
 
       <Group className={classes.buttons}>
-        <Button
-          className={clsx(classes.button, classes["button-view"])}
-          color="black.9"
-        >
-          Смотреть вакансию
-        </Button>
-        <Button
-          className={clsx(classes.button, classes["button-apply"])}
-          component="a"
-          href={vacancy.alternate_url}
-          target="_blank"
-          rel="noreferrer"
-          color="ultraLight.9"
-        >
-          Откликнуться
-        </Button>
+        {variant === 'list' ? (
+          <>
+            <Button
+              className={clsx(classes.button, classes["button-view"])}
+              color="black.9"
+            >
+            Смотреть вакансию
+            </Button>
+            <Button
+              className={clsx(classes.button, classes["button-apply"])}
+              component="a"
+              href={vacancy.alternate_url}
+              target="_blank"
+              rel="noreferrer"
+              color="ultraLight.9"
+            >
+            Откликнуться
+            </Button>
+        </>
+        ) : (
+          <>
+            <Button
+              className={clsx(classes.button, classes["button-view"])}
+              component="a"
+              href={vacancy.alternate_url}
+              target="_blank"
+              rel="noreferrer"
+              color="black.9"
+            >
+            Откликнуться на hh.ru
+            </Button>
+          </>
+        )}
+        
       </Group>
     </div>
   );

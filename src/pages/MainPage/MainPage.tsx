@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { Title, Loader, Group, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { useAppDispatch, useAppSelector } from "../../shared/hooks";
@@ -11,6 +12,7 @@ import classes from "./MainPage.module.css";
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
   const { items, loading, page, totalPages, skills, search, city } = useAppSelector(
     (state) => state.vacancies
   );
@@ -42,7 +44,7 @@ export const MainPage = () => {
           ) : (
             <>
               {items.map((vacancy) => (
-                <VacancyCard key={vacancy.id} vacancy={vacancy} />
+                <VacancyCard key={vacancy.id} vacancy={vacancy} onClick={() => navigate(`/vacancy/${vacancy.id}`, {state: { vacancy }})} />
               ))}
               {totalPages > 1 && (
                 <PaginationBar

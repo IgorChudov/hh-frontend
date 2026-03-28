@@ -1,0 +1,29 @@
+.container {
+  display: grid;
+  justify-content: center;
+}
+
+.card {
+  background-color: var(--mantine-color-white-0);
+  border-radius: 12px;
+  padding: 24px;
+  width: 659px;
+}
+
+.title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  padding-bottom: 12px;
+}
+
+.sub-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  padding-bottom: 8px;
+}
+
+.text {
+  padding-bottom: 16px;
+}

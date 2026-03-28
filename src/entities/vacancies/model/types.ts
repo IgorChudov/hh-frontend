@@ -12,6 +12,7 @@ export interface Vacancy {
   experience: { name: string };
   work_format: WorkFormat[];
   alternate_url: string;
+  snippet: { requirement: string; responsibility: string };
 }
 
 export interface VacancyResponse {
