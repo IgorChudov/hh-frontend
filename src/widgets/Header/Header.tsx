@@ -1,15 +1,22 @@
 import { Image, Text, NavLink, Group } from "@mantine/core";
-import clsx from "clsx";
-import classes from "./Header.module.css";
 import hhLogo from "../../shared/assets/hh-logo.svg";
 import ProfilePic from "../../shared/assets/profile-icon.svg?react";
 import SeparatorPic from "../../shared/assets/separator-icon.svg?react";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
+import { useAppDispatch } from "../../shared/hooks";
+import { resetVacancies } from "../../entities/vacancies/model/vacanciesSlice";
+import clsx from "clsx";
+import classes from "./Header.module.css";
 
 export const Header = () => {
   const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+
   const handleViewMainPage = () => {
-    navigate(`/vacancies`)
+    dispatch(resetVacancies());
+    setSearchParams({});
+    navigate(`/vacancies`);
   };
 
   return (
