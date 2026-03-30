@@ -24,15 +24,18 @@ const initialState: VacanciesState = {
   city: "",
 };
 
-export const loadVacancies = createAsyncThunk(
-  "vacancies/loadVacancies",
-  async (_, { getState }) => {
-    const state = getState() as { vacancies: VacanciesState };
-    const { page, skills, search, city } = state.vacancies;
-    const data = await fetchVacancies({ page, skills, search, city });
-    return data;
-  }
-);
+export const loadVacancies = createAsyncThunk<
+  { items: Vacancy[]; found: number },
+  { page?: number; search?: string } | void,
+  { state: { vacancies: VacanciesState } }
+>("vacancies/loadVacancies", async (params, { getState }) => {
+  const state = getState() as { vacancies: VacanciesState };
+  const page = params?.page ?? state.vacancies.page;
+  const search = params?.search ?? state.vacancies.search;
+  const { skills, city } = state.vacancies;
+  const data = await fetchVacancies({ page, skills, search, city });
+  return data;
+});
 
 const vacanciesSlice = createSlice({
   name: "vacancies",

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Group, TextInput, Button } from "@mantine/core";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { setSearch, loadVacancies, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
+import { setSearch, loadVacancies } from "../../../entities/vacancies/model/vacanciesSlice";
 import SearchIcon from "../../../shared/assets/search-icon.svg?react";
 import classes from "./SearchVacancies.module.css";
 
@@ -11,15 +11,12 @@ export const SearchVacancies = () => {
   const [localSearch, setLocalSearch] = useState(search);
 
   useEffect(() => {
-    if (localSearch !== search) {
-      setLocalSearch(search);
-    }
+    setLocalSearch(search);
   }, [search]);
 
   const handleSearch = () => {
     dispatch(setSearch(localSearch));
-    dispatch(setPage(1));
-    dispatch(loadVacancies());
+    dispatch(loadVacancies({ page: 1, search: localSearch }));
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
