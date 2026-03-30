@@ -18,9 +18,9 @@ export const VacancyPage = () => {
 
       <div className={classes.card}>
         <Text className={classes.title}>Требования</Text>
-        <Text className={classes.text}>{vacancy.snippet.responsibility}</Text>
+        <Text className={classes.text}>{vacancy.snippet.requirement}</Text>
         <Text className={classes["sub-title"]}>Обязанности</Text>
-        <Text>{vacancy.snippet.requirement}</Text>
+        <Text>{vacancy.snippet.responsibility}</Text>
       </div>
     </div>
   )
