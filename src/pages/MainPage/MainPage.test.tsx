@@ -7,8 +7,11 @@ describe("MainPage", () => {
   it("should render Main Page", async () => {
     renderWithProviders(<MainPage />);
     waitFor(() => {
+      expect(screen.getByText("Список вакансий")).toBeInTheDocument();
+    });
+    waitFor(() => {
       expect(
-        screen.getByText("Список вакансий по профессии Frontend-разработчик")
+        screen.getByText("по профессии Frontend-разработчик")
       ).toBeInTheDocument();
     });
   });

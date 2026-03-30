@@ -1,11 +1,12 @@
-import { useEffect, useRef, useMemo } from "react";
-import { useNavigate, useSearchParams } from "react-router";
-import { Title, Loader, Group, Text } from "@mantine/core";
+import { useEffect, useRef } from "react";
+import { useNavigate, useSearchParams, useLocation } from "react-router";
+import { Title, Group, Text } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { useAppDispatch, useAppSelector } from "../../shared/hooks";
 import { loadVacancies, setPage, setSearch, setCity, setSkills } from "../../entities/vacancies/model/vacanciesSlice";
 import { SearchVacancies } from "../../features/SearchVacancies";
 import { VacancyCard } from "../../widgets/VacancyCard/VacancyCard";
+import { VacancyCardSkeleton } from "../../widgets/VacancyCard/VacancyCardSkeleton";
 import { PaginationBar } from "../../widgets/PaginationBar/PaginationBar";
 import { SideBar } from "../../widgets/SideBar/SideBar";
 import classes from "./MainPage.module.css";
@@ -14,101 +15,72 @@ export const MainPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const { items, loading, page, totalPages, skills, search, city } = useAppSelector(
     (state) => state.vacancies
   );
 
-  // Refs для отслеживания предыдущих значений (объявляем до useEffect)
   const prevPageRef = useRef(page);
   const prevSearchRef = useRef(search);
   const prevCityRef = useRef(city);
+  const prevSkillsRef = useRef<string[]>([]);
 
-  // Флаг: true только для первоначальной синхронизации URL → Redux
   const isInitialMountRef = useRef(true);
-  // Флаг: предотвращает обратную синхронизацию Redux → URL во время обработки URL
-  const isSyncingFromUrlRef = useRef(false);
 
-  // Сравнение массивов навыков через useMemo для стабильности
-  const skillsString = useMemo(() => skills.join(","), [skills]);
-  const prevSkillsStringRef = useRef(skillsString);
-
-  // === 1. Синхронизация URL → Redux (только при монтировании и навигации браузера) ===
   useEffect(() => {
     const urlSearch = searchParams.get("search") || "";
     const urlCity = searchParams.get("city") || "";
     const urlSkills = searchParams.get("skills")?.split(",").filter(Boolean) || [];
     const urlPage = Number(searchParams.get("page")) || 1;
 
-    const urlSkillsString = urlSkills.join(",");
-
-    // Проверяем, есть ли изменения
     const pageChanged = urlPage !== page;
     const searchChanged = urlSearch && urlSearch !== search;
     const cityChanged = urlCity && urlCity !== city;
-    const skillsChanged = urlSkills.length > 0 && urlSkillsString !== skillsString;
+    const skillsChanged = searchParams.has("skills") && urlSkills.join(",") !== skills.join(",");
 
-    // Если ничего не изменилось — выходим
-    if (!pageChanged && !searchChanged && !cityChanged && !skillsChanged) {
+    if (!isInitialMountRef.current) {
       return;
     }
-
-    // Помечаем, что синхронизация идёт из URL
-    isSyncingFromUrlRef.current = true;
 
     if (pageChanged) dispatch(setPage(urlPage));
     if (searchChanged) dispatch(setSearch(urlSearch));
     if (cityChanged) dispatch(setCity(urlCity));
     if (skillsChanged) dispatch(setSkills(urlSkills));
 
-    // Сбрасываем флаг после применения всех изменений
-    isSyncingFromUrlRef.current = false;
     isInitialMountRef.current = false;
-  }, [searchParams]);
+  }, [searchParams, location.key, page, search, city, skills, dispatch]);
 
-  // === 2. Синхронизация Redux → URL (при изменении состояния) ===
   useEffect(() => {
-    // Пропускаем, если синхронизация идёт из URL (чтобы не было цикла)
-    if (isSyncingFromUrlRef.current) {
-      return;
-    }
-
     const params: Record<string, string> = {};
     if (search) params.search = search;
     if (city) params.city = city;
     if (skills.length) params.skills = skills.join(",");
     if (page > 1) params.page = page.toString();
 
-    // При первом рендере используем replace, чтобы не добавлять запись в историю
     const shouldReplace = isInitialMountRef.current;
     setSearchParams(params, { replace: shouldReplace });
-  }, [search, city, skillsString, page]);
+  }, [search, city, skills, page, setSearchParams, isInitialMountRef]);
 
-  // === 3. Загрузка вакансий при изменении параметров ===
   useEffect(() => {
     const hasNewPage = page !== prevPageRef.current;
-    const skillsChanged = skillsString !== prevSkillsStringRef.current;
+    const skillsChanged = skills.join(",") !== prevSkillsRef.current.join(",");
     const searchChanged = search !== prevSearchRef.current;
     const cityChanged = city !== prevCityRef.current;
     const filtersChanged = skillsChanged || searchChanged || cityChanged;
 
-    // Загружаем, если:
-    // - это первая загрузка (items.length === 0)
-    // - изменилась страница
-    // - изменились фильтры
     if (items.length === 0 || hasNewPage || filtersChanged) {
       dispatch(loadVacancies({ page, search }));
     }
 
     prevPageRef.current = page;
-    prevSkillsStringRef.current = skillsString;
+    prevSkillsRef.current = [...skills];
     prevSearchRef.current = search;
     prevCityRef.current = city;
-  }, [dispatch, page, items.length, skillsString, search, city]);
+  }, [dispatch, page, items.length, skills, search, city]);
 
-  // === 4. Скролл к началу при смене страницы ===
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [page]);
+  }, [page, items.length]);
 
   return (
     <div className={classes.container}>
@@ -127,7 +99,11 @@ export const MainPage = () => {
         <SideBar />
         <main className={classes.vacancies}>
           {loading ? (
-            <Loader className={classes.load}/>
+            <div className={classes.skeletons}>
+              {Array.from({ length: 10 }).map((_, i) => (
+                <VacancyCardSkeleton key={i} />
+              ))}
+            </div>
           ) : items.length === 0 ? (
             <Text className={classes.empty}>Вакансии не найдены</Text>
           ) : (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Group, TextInput, Button } from "@mantine/core";
 import { useAppDispatch, useAppSelector } from "../../../shared/hooks";
-import { setSearch, loadVacancies } from "../../../entities/vacancies/model/vacanciesSlice";
+import { setSearch, loadVacancies, setPage } from "../../../entities/vacancies/model/vacanciesSlice";
 import SearchIcon from "../../../shared/assets/search-icon.svg?react";
 import classes from "./SearchVacancies.module.css";
 
@@ -15,6 +15,7 @@ export const SearchVacancies = () => {
   }, [search]);
 
   const handleSearch = () => {
+    dispatch(setPage(1));
     dispatch(setSearch(localSearch));
     dispatch(loadVacancies({ page: 1, search: localSearch }));
   };

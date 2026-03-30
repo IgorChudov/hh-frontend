@@ -17,6 +17,7 @@ export const Header = () => {
     dispatch(resetVacancies());
     setSearchParams({});
     navigate(`/vacancies`);
+    window.scrollTo(0, 0);
   };
 
   return (

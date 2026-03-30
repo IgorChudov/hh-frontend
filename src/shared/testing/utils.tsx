@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import { render } from "@testing-library/react";
 import { store } from "../../app/store";
 import { theme } from "../../theme";
+import { BrowserRouter } from "react-router";
 
 if (typeof global.ResizeObserver === "undefined") {
   global.ResizeObserver = class {
@@ -14,7 +15,9 @@ if (typeof global.ResizeObserver === "undefined") {
 export function renderWithProviders(ui: React.ReactElement) {
   return render(
     <Provider store={store}>
-      <MantineProvider theme={theme}>{ui}</MantineProvider>
+      <BrowserRouter>
+        <MantineProvider theme={theme}>{ui}</MantineProvider>
+      </BrowserRouter>
     </Provider>
   );
 }

@@ -8,7 +8,7 @@ describe("Header", () => {
     renderWithProviders(<Header />);
 
     waitFor(() => {
-      expect(screen.queryByText("hh .FE")).toBeInTheDocument();
+      expect(screen.queryByText(".FrontEnd")).toBeInTheDocument();
     });
     waitFor(() => {
       expect(screen.queryByText("Вакансии FE")).toBeInTheDocument();

@@ -41,3 +41,9 @@
 .vacancies {
   margin: 0 auto;
 }
+
+.skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
