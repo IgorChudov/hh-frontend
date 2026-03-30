@@ -12,6 +12,7 @@ const vacancyMock = {
   experience: { id: "between1And3", name: "От 1 года до 3 лет" },
   work_format: [{ id: "REMOTE", name: "Удалённая работа" }],
   alternate_url: "https://hh.ru/vacancy/1",
+  snippet: { requirement: "Требования", responsibility: "Обязанности" },
 };
 
 describe("VacancyCard", () => {
