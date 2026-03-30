@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router";
+import { HashRouter } from "react-router";
 import { Provider } from "react-redux";
 import { MantineProvider } from "@mantine/core";
 import { App } from "./app/App";
@@ -12,9 +12,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
       <Provider store={store}>
         <MantineProvider theme={theme}>
-          <BrowserRouter basename="/hh-frontend">
+          <HashRouter>
             <App />
-          </BrowserRouter>
+          </HashRouter>
         </MantineProvider>
       </Provider>
   </React.StrictMode>
