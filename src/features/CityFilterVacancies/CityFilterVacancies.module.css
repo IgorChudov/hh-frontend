@@ -1,0 +1,11 @@
+.tabs {
+  margin-bottom: 24px;
+}
+
+.tabs__list::before {
+  border: none;
+}
+
+.tabs__item {
+  padding: 10px;
+}

@@ -10,6 +10,7 @@ import { VacancyCardSkeleton } from "../../widgets/VacancyCard/VacancyCardSkelet
 import { PaginationBar } from "../../widgets/PaginationBar/PaginationBar";
 import { SideBar } from "../../widgets/SideBar/SideBar";
 import classes from "./MainPage.module.css";
+import { CityFilterVacancies } from "../../features/CityFilterVacancies/CityFilterVacancies";
 
 export const MainPage = () => {
   const dispatch = useAppDispatch();
@@ -98,6 +99,7 @@ export const MainPage = () => {
       <Group className={classes.content}>
         <SideBar />
         <main className={classes.vacancies}>
+          <CityFilterVacancies />
           {loading ? (
             <div className={classes.skeletons}>
               {Array.from({ length: 10 }).map((_, i) => (
