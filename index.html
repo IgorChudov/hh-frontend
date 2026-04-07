@@ -8,6 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+      // Handle redirect from 404.html (GitHub Pages SPA hack)
+      (function() {
+        var search = window.location.search;
+        if (search.indexOf('?/') === 0) {
+          var path = search.substring(2).replace(/~and~/g, '&');
+          window.history.replaceState(null, '', window.location.pathname + path + window.location.hash);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
