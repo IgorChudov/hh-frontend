@@ -13,5 +13,6 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     setupFiles: "./src/shared/testing/setup.tsx",
+    passWithNoTests: true,
   },
 });
