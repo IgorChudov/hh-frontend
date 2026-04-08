@@ -8,6 +8,7 @@ import { Layout } from "./components/layout/Layout";
 import { VacanciesPage } from "./pages/vacancies_page/VacanciesPage";
 import { VacanciesList } from "./components/vacancies_list/VacanciesList";
 import { VacancyPage } from "./pages/vacancy_page/VacancyPage";
+import { AboutPage } from "./pages/about_page/AboutPage";
 import { NotFoundPage } from "./pages/notfound_page/NotFoundPage";
 
 export const router = createBrowserRouter(
@@ -22,6 +23,7 @@ export const router = createBrowserRouter(
           <Route path="*" element={<NotFoundPage />} />
         </Route>
         <Route path="vacancies/:id" element={<VacancyPage />} />
+        <Route path="about" element={<AboutPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </>

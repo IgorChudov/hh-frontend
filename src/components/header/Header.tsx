@@ -2,8 +2,7 @@ import { useCallback } from "react";
 import { Image, Text, NavLink, Group } from "@mantine/core";
 import hhLogo from "../../assets/hh-logo.svg";
 import ProfilePic from "../../assets/profile-icon.svg?react";
-import SeparatorPic from "../../assets/separator-icon.svg?react";
-import { useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams, useMatch } from "react-router";
 import { useAppDispatch } from "../../store/hooks";
 import { resetVacancies, loadVacancies } from "../../store/vacanciesSlice";
 import clsx from "clsx";
@@ -14,14 +13,21 @@ export const Header = () => {
   const [, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
 
+  const isVacanciesActive = useMatch("/vacancies/*");
+  const isAboutActive = useMatch("/about");
+
   const handleViewMainPage = useCallback(() => {
     dispatch(resetVacancies());
     setSearchParams({});
     navigate(`/vacancies`);
     window.scrollTo(0, 0);
-    // Загружаем вакансии после сброса
     dispatch(loadVacancies());
   }, [dispatch, navigate, setSearchParams]);
+
+  const handleViewAboutPage = useCallback(() => {
+    navigate(`/about`);
+    window.scrollTo(0, 0);
+  }, [navigate]);
 
   return (
     <header className={classes.header}>
@@ -30,20 +36,23 @@ export const Header = () => {
         <Text className={classes.text}>.FrontEnd</Text>
       </Group>
 
-      <Group className={classes.nav}>
+      <div className={classes.nav}>
         <NavLink
           onClick={handleViewMainPage}
           label="Вакансии FE"
-          className={clsx(classes["nav__link"], classes["nav__link-vacancies"])}
-          rightSection={<SeparatorPic />}
+          className={clsx(classes["nav__link"], {
+            [classes["nav__link--active"]]: isVacanciesActive,
+          })}
         />
         <NavLink
-          href="#"
+          onClick={handleViewAboutPage}
           label="Обо мне"
-          className={clsx(classes["nav__link"], classes["nav__link-profile"])}
+          className={clsx(classes["nav__link"], classes["nav__link-profile"], {
+            [classes["nav__link--active"]]: isAboutActive,
+          })}
           leftSection={<ProfilePic />}
         />
-      </Group>
+      </div>
       <div>{/* Пустой элемент для симметрии grid */}</div>
     </header>
   );
